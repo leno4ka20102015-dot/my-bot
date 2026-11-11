@@ -2,7 +2,8 @@ import telebot
 from telebot import types
 
 # ВСТАВЬТЕ СВОЙ ТОКЕН ВМЕСТО НАДПИСИ В КАВЫЧКАХ
-TOKEN = '9091423408:AAHioSRvYRKfTDMVr3TU36yyuItE3eUfw00'
+import os
+TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN)
 
 # Обработка команды /start
