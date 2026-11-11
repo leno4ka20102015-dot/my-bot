@@ -43,6 +43,7 @@ def handle_order(message):
         return
     
     # Отправляем сообщение вам (замените 123456789 на ваш ID)
-    bot.send_message(5882531188, f"Новый заказ от {message.from_user.first_name}:\n{message.text}")
+    admin_id = os.getenv('ADMIN_ID')
+bot.send_message(admin_id, f"🔔 Новый заказ!\nОт: {user_name} ({username})\nЗаказ: {message.text}")
     bot.send_message(message.chat.id, "Спасибо! Ваш заказ принят, мы скоро свяжемся с вами.")
 bot.infinity_polling()
