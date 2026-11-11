@@ -46,4 +46,23 @@ def handle_order(message):
     admin_id = os.getenv('ADMIN_ID')
 bot.send_message(admin_id, f"🔔 Новый заказ!\nОт: {user_name} ({username})\nЗаказ: {message.text}")
     bot.send_message(message.chat.id, "Спасибо! Ваш заказ принят, мы скоро свяжемся с вами.")
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
+
+# Создаем простой сервер, чтобы Render думал, что это сайт
+class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b'Bot is running!')
+
+def run_server():
+    port = int(os.environ.get('PORT', 10000))
+    httpd = HTTPServer(('0.0.0.0', port), SimpleHTTPRequestHandler)
+    httpd.serve_forever()
+
+# Запускаем сервер в отдельном потоке
+threading.Thread(target=run_server, daemon=True).start()
+
+# А это ваш бот, он продолжит работать
 bot.infinity_polling()
